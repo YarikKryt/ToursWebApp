@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- SVG Icons Definitions -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="bootstrap" viewBox="0 0 118 94">
+            <title>Bootstrap</title>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"></path>
+        </symbol>
+        <symbol id="twitter" viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+        </symbol>
+        <symbol id="instagram" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+        </symbol>
+        <symbol id="facebook" viewBox="0 0 24 24">
+            <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+        </symbol>
+    </svg>
+ <!-- SVG Icons Definitions end -->
+</head>
+<body>
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <div class="col-md-3 mb-2 mb-md-0">
+        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+            <!-- Заміна іконки Bootstrap на вашу іконку -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 512 512" id="world-travel">
+                <circle cx="256" cy="256" r="232" fill="#d3effe"></circle>
+                <circle cx="256" cy="256" r="192" fill="#80daff"></circle>
+                <path fill="#fac850" d="M189.0376,377.1877l-2.0752-10.3754a19.7772,19.7772,0,0,1,10.5486-21.5679l7.5564-3.7781A19.7772,19.7772,0,0,0,216,323.7771h0A19.7771,19.7771,0,0,0,196.2229,304H168l-21.6189-10.8094a20,20,0,0,0-20.0383,1.2475L112,304H70.0747a192.6331,192.6331,0,0,0,77.3711,110.2771l31.0432-15.5217A19.7771,19.7771,0,0,0,189.0376,377.1877Z"></path>
+                <rect width="16" height="16" x="224" y="368" fill="#d3effe"></rect>
+                <rect width="16" height="16" x="288" y="112" fill="#d3effe"></rect>
+                <rect width="16" height="16" x="352" y="312" fill="#d3effe"></rect>
+                <rect width="16" height="16" x="104" y="200" fill="#d3effe"></rect>
+                <path fill="#fac850" d="M313.1506,252.0821l7.7938-8.755L304.729,235.324c-9.0419-4.4626-11.547-16.2112-5.2037-24.4047l7.5693-9.7772a16.9576,16.9576,0,0,1,4.6578-4.1453l5.7412-3.4569a15.9255,15.9255,0,0,1,22.139,5.4126l4.4493,7.6835a15.8352,15.8352,0,0,0,19.7129,6.6184l11.2473-4.4957a15.8356,15.8356,0,0,1,19.713,6.6183l7.5231,12.992a16.3609,16.3609,0,0,1-.5916,17.12l-10.5135,16.117a16.5,16.5,0,0,1-21.0015,6.0167l-7.519-3.7109-16.01,17.9847a9.784,9.784,0,0,1-13.7566,1.0023l-19.1381-17.0371A9.784,9.784,0,0,1,313.1506,252.0821Z"></path>
+                <path fill="#25b1fa" d="M304 320c0 13.2548-24 40-24 40s-24-26.7452-24-40a24 24 0 0 1 48 0zM175.7806 276.7745c0 19.4007-31.52 58.5469-31.52 58.5469s-31.52-39.1462-31.52-58.5469 14.1118-35.1282 31.52-35.1282S175.7806 257.3737 175.7806 276.7745zM384 171.1282c0 19.4007-31.52 58.5469-31.52 58.5469s-31.52-39.1462-31.52-58.5469S335.0724 136 352.48 136 384 151.7274 384 171.1282z"></path>
+                <path fill="#fac850" d="M162.84,125.87l24.9681-18.7261a10,10,0,0,1,9.1623-1.4868l38.1049,12.7016a10,10,0,0,1,6.416,6.6134l21.0011,70.0038a10,10,0,0,1-1.77,9.12l-20.9144,26.143a10,10,0,0,1-15.6174,0L202.474,203.0925A10,10,0,0,0,196.08,199.44l-41.1031-5.8718a10,10,0,0,1-8.2872-12.3249l12.45-49.7988A10,10,0,0,1,162.84,125.87Z"></path>
+                <path fill="#25b1fa" d="M295.9722 432l-35.5192-15.68a10 10 0 0 1 0-16.641l30.4808-12.3205A20 20 0 0 1 302.0278 384h26.69L400 336h24l-32 56 48 8 32-24h16l-16 56zM216.0278 136l35.5192-15.68a10 10 0 0 0 0-16.641L221.0662 91.359A20 20 0 0 0 209.9722 88h-26.69L112 40H88l32 56-48 8L40 80H24l16 56z"></path>
+                <path fill="#80daff" d="M32 256A223.3781 223.3781 0 0 1 57.6438 152H39.731A239.6379 239.6379 0 0 0 67.9541 404.9741l12.5313-9.9482A221.4639 221.4639 0 0 1 32 256zM408 40V70.3877A239.6561 239.6561 0 0 0 152 39.7311V57.6444A223.6452 223.6452 0 0 1 410.4785 93.939 8.0006 8.0006 0 0 0 424 88.1494V40zM256 480A223.3695 223.3695 0 0 1 93.9385 410.48a8 8 0 0 0-13.7891 5.5l-.1494 56 16 .043.1-37.1734A239.567 239.567 0 0 0 384 458.9229V439.7206A223.7984 223.7984 0 0 1 256 480zM437.1729 98.7524l-12.0762 10.4952A223.7524 223.7524 0 0 1 480 256a221.215 221.215 0 0 1-30.0166 112h18.3147A237.23 237.23 0 0 0 496 256 239.75 239.75 0 0 0 437.1729 98.7524z"></path>
+            </svg>
+        </a>
+      </div>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="/tours" class="nav-link px-2">View Tours</a></li>
+        <li><a href="/create-tour" class="nav-link px-2">Add New Tour</a></li>
+        <li><a href="/about" class="nav-link px-2">About</a></li>
+        <li><a href="#" class="nav-link px-2">FAQ</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-primary btn-md px-4" data-bs-toggle="modal" data-bs-target="#contactModal">
+            Contact Us
+        </button>
+      </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="contactModalLabel">Our contact details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><b>Phone:</b> +1-234-567-890</p>
+                        <p><b>Email:</b> booking@tourswebapp.com</p>
+                        <p>Need more details or assistance? Our team is ready to help you!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+    {% block body %}{% endblock %}
+    <div class="container">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+  <div class="col-md-4 d-flex align-items-center">
+    <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+      <!-- Заміна іконки Bootstrap на вашу іконку -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" id="travel">
+        <g fill="#fff" transform="translate(5 -1031.362)">
+          <circle cx="8" cy="1044.362" r="13" fill="#239fdb" fill-rule="evenodd"></circle>
+          <path fill="#0b5ecd" d="M11.307 1056.925a13 13 0 0 0 .17-.038 13 13 0 0 0 1.234-.408 13 13 0 0 0 1.185-.531 13 13 0 0 0 1.127-.647 13 13 0 0 0 1.057-.755 13 13 0 0 0 .977-.858 13 13 0 0 0 .886-.951 13 13 0 0 0 .786-1.035 13 13 0 0 0 .68-1.108 13 13 0 0 0 .566-1.17 13 13 0 0 0 .445-1.22 13 13 0 0 0 .32-1.26 13 13 0 0 0 .196-1.285 13 13 0 0 0 .013-.262l-6.99-6.99a1.496 1.496 0 0 0-2.121 0l-2.467 2.465-5.994-1.067-1.414 1.414 3.535 3.536-1.297 1.302-1.181-.248-1.415 1.414 3.536 3.535 6.166 6.167z"></path>
+          <path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12.898 1037.966c-.384 0-.767.148-1.06.442l-2.467 2.464-5.995-1.066-1.414 1.414 5.28 1.783-3.041 3.055-1.182-.248-1.414 1.414 2.488 1.047 1.047 2.488 1.416-1.414-.242-1.172 3.055-3.055 1.795 5.27 1.414-1.414-1.061-6.004 2.441-2.441a1.498 1.498 0 0 0 0-2.122 1.496 1.496 0 0 0-1.06-.44z"></path>
+        </g>
+      </svg>
+    </a>
+    <span class="mb-3 mb-md-0 text-body-secondary">© 2024 ToursWebApp</span>
+  </div>
+
+  <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+    <li class="ms-3"><a class="text-body-secondary" href="https://x.com/elonmusk" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+    <li class="ms-3"><a class="text-body-secondary" href="https://www.instagram.com/lpnu_official/" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+    <li class="ms-3"><a class="text-body-secondary" href="https://www.facebook.com/lvivpolytechnic" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+  </ul>
+</footer>
+</div>
+</body>
+</html>

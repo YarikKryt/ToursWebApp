@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Update Tour
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Update Tour</h1>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" class="form-control" value="{{ tour.title }}" placeholder="Enter tour title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="type">Tour Type</label>
+                <input type="text" name="type" id="type" class="form-control" value="{{ tour.type }}" placeholder="Enter tour type" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price" class="form-control" step="0.01" value="{{ tour.price }}" placeholder="Enter tour price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="start_country_id">Start Country</label>
+                <select name="start_country_id" id="start_country_id" class="form-control" required>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}" {% if country.id == tour.start_country_id %}selected{% endif %}>{{ country.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="start_city">Start City</label>
+                <input type="text" name="start_city" id="start_city" class="form-control" value="{{ tour.start_city }}" placeholder="Enter start city" required>
+            </div>
+
+            <div class="form-group">
+                <label for="meeting_point">Meeting Point</label>
+                <input type="text" name="meeting_point" id="meeting_point" class="form-control" value="{{ tour.meeting_point }}" placeholder="Enter meeting point (can be blank)">
+            </div>
+
+            <div class="form-group">
+                <label for="meeting_time">Meeting Time (can be blank)</label>
+                <input type="time" name="meeting_time" id="meeting_time" class="form-control" value="{{ tour.meeting_time }}">
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="has_meals" id="has_meals" {% if tour.has_meals %}checked{% endif %}>
+                <label class="form-check-label" for="has_meals">Has Meals</label>
+            </div>
+
+
+            <div class="form-group">
+                <label for="meals_per_day">Meals per Day</label>
+                <input type="number" name="meals_per_day" id="meals_per_day" class="form-control" value="{{ tour.meals_per_day }}" placeholder="Enter number of meals per day (can be blank if has meals is not selected)">
+            </div>
+
+            <div class="form-group">
+                <label for="min_number_of_people">Min Number of People</label>
+                <input type="number" name="min_number_of_people" id="min_number_of_people" class="form-control" value="{{ tour.min_number_of_people }}" placeholder="Enter minimum number of people" required>
+            </div>
+
+            <div class="form-group">
+                <label for="max_number_of_people">Max Number of People</label>
+                <input type="number" name="max_number_of_people" id="max_number_of_people" class="form-control" value="{{ tour.max_number_of_people }}" placeholder="Enter maximum number of people" required>
+            </div>
+
+            <div class="form-group">
+                <label for="duration_days">Duration in Days</label>
+                <input type="number" name="duration_days" id="duration_days" class="form-control" value="{{ tour.duration_days }}" placeholder="Enter tour duration in days" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" class="form-control" placeholder="Enter tour description">{{ tour.description }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ tour.start_date }}" placeholder="Select tour start date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" value="{{ tour.end_date }}" placeholder="Select tour end date" required>
+            </div>
+
+            <!-- Зображення -->
+            <div class="form-group">
+                <label for="image">Tour Image</label>
+                <div class="card" style="width: 18rem;">
+                    {% if tour.image_path %}
+                        <img src="{{ url_for('static', filename=tour.image_path) }}" class="card-img-top" alt="Tour Image" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="No Image" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">Current Image</h5>
+                        <p class="card-text">This is how the image will look in the tour list.</p>
+                    </div>
+                </div>
+                <input type="file" class="form-control-file" name="image">
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Update Tour</button>
+        </form>
+    </div>
+{% endblock %}

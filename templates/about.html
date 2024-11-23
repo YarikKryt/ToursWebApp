@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+About ToursWebApp
+{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6 text-center mb-4 mb-lg-0">
+            <img src="{{ url_for('static', filename='img/about/our-jorney.png') }}"
+             class="img-fluid shadow-lg w-100"
+             alt="ToursWebApp Team">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-4 mb-4 text-primary">Our Journey</h1>
+            <p class="lead text-muted">
+                ToursWebApp was born from a passion for exploration and a desire to make the world more accessible.
+                We're more than a travel company – we're architects of unforgettable experiences and storytellers of global adventures.
+            </p>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-compass fs-1 text-primary mb-3"></i>
+                    <h3 class="card-title">Our Mission</h3>
+                    <p class="card-text text-muted">
+                        To inspire people to explore the world, break stereotypes, and create meaningful, transformative journeys that connect cultures and expand perspectives.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-people fs-1 text-primary mb-3"></i>
+                    <h3 class="card-title">Our Team</h3>
+                    <p class="card-text text-muted">
+                        A passionate collective of travelers, local guides, and travel experts who live and breathe adventure, committed to crafting unique and authentic experiences.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-globe fs-1 text-primary mb-3"></i>
+                    <h3 class="card-title">Our Values</h3>
+                    <p class="card-text text-muted">
+                        Sustainability, cultural respect, and creating positive impact through responsible travel that benefits local communities and preserves natural environments.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-light p-5 rounded mt-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="mb-4">Join Our Global Community</h2>
+                <p class="lead text-muted">
+                    Every journey with ToursWebApp is an opportunity to grow, learn, and connect. We invite you to be part of a global network of curious travelers who believe in the transformative power of travel.
+                </p>
+                <a href="/tours" class="btn btn-primary btn-lg mt-3">Explore Our Tours</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='img/about/g-global-background.jpg') }}"
+                     class="img-fluid rounded shadow"
+                     alt="Global Travel Community">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

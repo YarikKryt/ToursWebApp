@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ tour.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">{{ tour.title }}</h1>
+    <div class="row">
+        <!-- Зображення та основна інформація -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if tour.image_path %}
+                <img src="{{ url_for('static', filename=tour.image_path) }}" class="card-img-top" alt="{{ tour.title }}">
+                {% else %}
+                <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="No Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ tour.title }}</h5>
+                    <p class="card-text"><b>Type:</b> {{ tour.type }}</p>
+                    <p class="card-text"><b>Price:</b> {{ tour.price }} USD</p>
+                    <p class="card-text"><b>Duration:</b> {{ tour.duration_days }} days</p>
+                    <p class="card-text"><b>Start Date:</b> {{ tour.start_date.strftime('%Y-%m-%d') }}</p>
+                    <p class="card-text"><b>End Date:</b> {{ tour.end_date.strftime('%Y-%m-%d') }}</p>
+                    <p class="card-text">{{ tour.description|truncate(150, True) }}</p>
+                </div>
+                <div class="card-footer text-muted">
+                    Created on: {{ tour.created_at.strftime('%Y-%m-%d %H:%M') }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Деталі туру -->
+        <div class="col-md-8">
+            <h2>Tour Details:</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Start Country</th>
+                    <td>{{ tour.start_country.name }}</td>
+                </tr>
+                <tr>
+                    <th>Start City</th>
+                    <td>{{ tour.start_city }}</td>
+                </tr>
+                <tr>
+                    <th>Meeting Point</th>
+                    <td>{{ tour.meeting_point }}</td>
+                </tr>
+                <tr>
+                    <th>Meeting Time</th>
+                    <td>{{ tour.meeting_time.strftime('%H:%M') if tour.meeting_time else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Minimum Number of People</th>
+                    <td>{{ tour.min_number_of_people }}</td>
+                </tr>
+                <tr>
+                    <th>Maximum Number of People</th>
+                    <td>{{ tour.max_number_of_people }}</td>
+                </tr>
+                <tr>
+                    <th>Meals Included</th>
+                    <td>{% if tour.has_meals %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Meals per Day</th>
+                    <td>{{ tour.meals_per_day if tour.has_meals else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Route Points</th>
+                    <td>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Location</th>
+                                    <th>Type</th>
+                                    <th>Final?</th>
+                                    <th>Transport to Next</th>
+                                    <th>Stay Duration (hours)</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for point in tour.route_points %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ point.location }}</td>
+                                    <td>{{ point.location_type }}</td>
+                                    <td>{% if point.is_final %}Yes{% else %}No{% endif %}</td>
+                                    <td>{{ point.transport_to_next if point.transport_to_next else 'N/A' }}</td>
+                                    <td>{{ point.stay_duration_hours if point.stay_duration_hours else 'N/A' }}</td>
+                                    <td>{{ point.description if point.description else 'No Description' }}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center">No route points available.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+
+            <!-- Кнопки для редагування, видалення та бронювання -->
+            <div class="d-flex justify-content-start gap-2 mt-4">
+                <a href="/tours/{{ tour.id }}/update" class="btn btn-outline-primary btn-lg px-4">Update tour</a>
+                <a href="/tours/{{ tour.id }}/delete" class="btn btn-outline-danger btn-lg px-4" onclick="return confirm('Are you sure you want to delete this tour?');">Delete tour</a>
+                <a href="/tours/{{ tour.id }}/route-points/update" class="btn btn-outline-secondary btn-lg px-4">Update Route Points</a>
+                <button type="button" class="btn btn-success btn-lg px-4" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                    Book This Tour
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальне вікно -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- Додано modal-lg для збільшення -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Contact Us to Book This Tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><b>Phone:</b> +1-234-567-890</p>
+                <p><b>Email:</b> booking@tourswebapp.com</p>
+                <p>Contact us to finalize your booking and get more details about the tour!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

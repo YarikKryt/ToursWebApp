@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Tour Details{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>{{ tour.title }}</h1>
+    <p><strong>Price:</strong> {{ tour.price }} $</p>
+    <p><strong>Description:</strong> {{ tour.description }}</p>
+    <img src="{{ url_for('static', filename=tour.image_path) }}" alt="{{ tour.title }}" class="img-fluid mb-4">
+
+    <h2>Route Points</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Location</th>
+                <th>Type</th>
+                <th>Final?</th>
+                <th>Transport</th>
+                <th>Duration (hours)</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for point in route_points %}
+            <tr>
+                <td>{{ point.sequence_number }}</td>
+                <td>{{ point.location }}</td>
+                <td>{{ point.location_type }}</td>
+                <td>{% if point.is_final %}Yes{% else %}No{% endif %}</td>
+                <td>{{ point.transport_to_next }}</td>
+                <td>{{ point.stay_duration_hours }}</td>
+                <td>{{ point.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('update_route_points', id=tour.id) }}" class="btn btn-warning mt-3">Update Route Points</a>
+</div>
+{% endblock %}

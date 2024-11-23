@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Explore the World - ToursWebApp
+{% endblock %}
+
+{% block body %}
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="{{ url_for('static', filename='img/index/tours-webapp-hero.svg') }}" class="d-block mx-lg-auto img-fluid rounded shadow-lg" alt="Travel Adventure" width="700" height="500" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Discover Extraordinary Journeys</h1>
+            <p class="lead">Embark on life-changing adventures that transform how you see the world. From hidden gems to iconic destinations, we craft unforgettable experiences tailored just for you.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="/tours" class="btn btn-primary btn-lg px-4 me-md-2">Explore Tours</a>
+                <a href="/create-tour" class="btn btn-outline-secondary btn-lg px-4">Create Custom Trip</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom text-center">Why Choose Our Tours?</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
+                <img src="{{ url_for('static', filename='img/index/unique-destination.svg') }}" alt="Unique Destinations Icon" class="img-fluid" width="32" height="52">
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Unique Destinations</h3>
+            <p>We go beyond typical tourist routes, offering journeys to places that tell extraordinary stories and create lasting memories.</p>
+        </div>
+
+
+        <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
+                <img src="{{ url_for('static', filename='img/index/user-expert-svgrepo-com.svg') }}" alt="Expert Guides Icon" class="img-fluid" width="32" height="32">
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Expert Guides</h3>
+            <p>Our professional guides are passionate locals who provide deep insights and create immersive, authentic experiences.</p>
+        </div>
+
+
+        <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
+                <img src="{{ url_for('static', filename='img/index/personalized.svg') }}" alt="Personalized Care Icon" class="img-fluid" width="32" height="32">
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Personalized Care</h3>
+            <p>We craft each journey with attention to detail, ensuring comfort, safety, and a truly personalized travel experience.</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="container py-1">
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5 text-center">
+            <blockquote class="blockquote">
+                <p class="display-6 fw-bold">"Travel is the only thing you buy that makes you richer."</p>
+                <footer class="blockquote-footer">Anonymous Traveler</footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<div class="container col-xl-10 px-4 py-5">
+    <div class="row featurette align-items-center">
+        <div class="col-md-7 order-md-2 d-flex flex-column justify-content-center">
+            <h2 class="featurette-heading fw-bold text-body-emphasis">Customer Testimonial</h2>
+            <p class="lead">"The team at ToursWebApp transformed my vacation into an incredible journey. Every detail was perfectly planned, and I discovered places I never knew existed. This wasn't just a trip; it was a life-changing experience!"</p>
+            <div class="d-flex align-items-center">
+                <img src="{{ url_for('static', filename='img/index/Customer.jpg') }}" class="rounded-circle me-3" alt="Customer" width="75">
+                <div>
+                    <strong>Sarah Johnson</strong>
+                    <p class="text-muted mb-0">Adventurer & Travel Enthusiast</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img src="{{ url_for('static', filename='img/index/joshua-earle-Dwheufds6kQ-unsplash.jpg') }}" class="img-fluid mx-auto rounded shadow-lg" alt="Travel Experience" width="500">
+        </div>
+    </div>
+</div>
+{% endblock %}

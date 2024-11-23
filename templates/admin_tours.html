@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Tours{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Manage Tours</h1>
+    <a href="{{ url_for('create_tour') }}" class="btn btn-success mb-3">Add New Tour</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tour in tours.items %}
+            <tr>
+                <td>{{ tour.id }}</td>
+                <td>
+                    <img src="{{ url_for('static', filename=tour.image_path) }}" alt="{{ tour.title }}"
+                         class="img-thumbnail" style="width: 100px;">
+                </td>
+                <td>{{ tour.title }}</td>
+                <td>{{ tour.price }} $</td>
+                <td>
+                    <a href="{{ url_for('admin_tour_details', id=tour.id) }}" class="btn btn-info btn-sm">View More</a>
+                    <a href="{{ url_for('update_tour', id=tour.id) }}" class="btn btn-warning btn-sm">Update</a>
+                    <form action="{{ url_for('delete_tour', id=tour.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this tour?')">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Пагінація -->
+    <nav>
+        <ul class="pagination">
+            {% if tours.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('admin_tours', page=tours.prev_num) }}">Previous</a>
+                </li>
+            {% endif %}
+            {% for page in tours.iter_pages() %}
+                <li class="page-item {% if page == tours.page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('admin_tours', page=page) }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+            {% if tours.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('admin_tours', page=tours.next_num) }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add New Tour
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Add New Tour</h1>
+        <form action="/create-tour" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" class="form-control" placeholder="Enter tour title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="type">Tour Type</label>
+                <input type="text" name="type" id="type" class="form-control" placeholder="Enter tour type" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price" class="form-control" step="0.01" placeholder="Enter tour price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="start_country_id">Start Country</label>
+                <select name="start_country_id" id="start_country_id" class="form-control" required>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start_city">Start City</label>
+                <input type="text" name="start_city" id="start_city" class="form-control" placeholder="Enter start city" required>
+            </div>
+
+            <div class="form-group">
+                <label for="meeting_point">Meeting Point</label>
+                <input type="text" name="meeting_point" id="meeting_point" class="form-control" placeholder="Enter meeting point (can be blank)">
+            </div>
+
+            <div class="form-group">
+                <label for="meeting_time">Meeting Time (can be blank)</label>
+                <input type="time" name="meeting_time" id="meeting_time" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="has_meals">Has Meals</label>
+                <input type="checkbox" name="has_meals" id="has_meals">
+            </div>
+
+            <div class="form-group">
+                <label for="meals_per_day">Meals per Day</label>
+                <input type="number" name="meals_per_day" id="meals_per_day" class="form-control" placeholder="Enter number of meals per day (can be blank if has meals is not selected)">
+            </div>
+
+            <div class="form-group">
+                <label for="min_number_of_people">Min Number of People</label>
+                <input type="number" name="min_number_of_people" id="min_number_of_people" class="form-control" placeholder="Enter minimum number of people" required>
+            </div>
+
+            <div class="form-group">
+                <label for="max_number_of_people">Max Number of People</label>
+                <input type="number" name="max_number_of_people" id="max_number_of_people" class="form-control" placeholder="Enter maximum number of people" required>
+            </div>
+
+            <div class="form-group">
+                <label for="duration_days">Duration in Days</label>
+                <input type="number" name="duration_days" id="duration_days" class="form-control" placeholder="Enter tour duration in days" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" class="form-control" placeholder="Enter tour description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" placeholder="Select tour start date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" placeholder="Select tour end date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Tour Image</label>
+                <input type="file" name="image" id="image" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Tour</button>
+        </form>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Загальна функція валідації для полів
+        function validateField(input) {
+            const value = input.value.trim();
+            const name = input.name;
+            let errorMessage = '';
+
+            // Валідація залежно від імені поля
+            switch (name) {
+                case 'title':
+                case 'type':
+                case 'start_city':
+                    if (!value) errorMessage = `${name.replace('_', ' ')} is required.`;
+                    break;
+                case 'price':
+                case 'min_number_of_people':
+                case 'max_number_of_people':
+                case 'duration_days':
+                    if (!value || isNaN(value) || parseFloat(value) <= 0) {
+                        errorMessage = `${name.replace('_', ' ')} must be a positive number.`;
+                    }
+                    break;
+                case 'start_date':
+                case 'end_date':
+                    if (!value) {
+                        errorMessage = `${name.replace('_', ' ')} is required.`;
+                    } else {
+                        const startDate = document.getElementById('start_date').value;
+                        const endDate = document.getElementById('end_date').value;
+                        if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+                            errorMessage = `End date must be after the start date.`;
+                        }
+                    }
+                    break;
+            }
+
+            // Відображення помилки
+            const errorDiv = input.nextElementSibling;
+            if (errorMessage) {
+                input.classList.add('is-invalid');
+                if (errorDiv) {
+                    errorDiv.textContent = errorMessage;
+                } else {
+                    const newErrorDiv = document.createElement('div');
+                    newErrorDiv.className = 'invalid-feedback';
+                    newErrorDiv.textContent = errorMessage;
+                    input.parentNode.appendChild(newErrorDiv);
+                }
+            } else {
+                input.classList.remove('is-invalid');
+                if (errorDiv) errorDiv.remove();
+            }
+        }
+
+        // Додавання обробника втрати фокусу для всіх полів
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function () {
+                validateField(input);
+            });
+        });
+    });
+</script>
+
+{% endblock %}

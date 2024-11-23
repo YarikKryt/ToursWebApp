@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Login
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>Admin Login</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/admin-login">
+                        <!-- CSRF token -->
+                        {{ form.hidden_tag() }}
+
+                        <!-- Username input -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            {{ form.username(class="form-control", id="username") }}
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            {{ form.password(class="form-control", id="password") }}
+                        </div>
+
+                        <!-- Error message -->
+                        {% if error %}
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/" class="text-muted">Back to homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

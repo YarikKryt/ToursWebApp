@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}
+All tours on the website
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">Available tours</h1>
+    <h2>Filter Tours</h2>
+    <form method="get" action="/tours" class="mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Search by title">
+            </div>
+            <div class="col-md-3">
+                <label for="type">Type</label>
+                <input type="text" id="type" name="type" class="form-control" placeholder="Search by type">
+            </div>
+            <div class="col-md-3">
+                <label for="min_price">Min Price</label>
+                <input type="number" id="min_price" name="min_price" class="form-control" step="0.01" placeholder="Min price">
+            </div>
+            <div class="col-md-3">
+                <label for="max_price">Max Price</label>
+                <input type="number" id="max_price" name="max_price" class="form-control" step="0.01" placeholder="Max price">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label for="start_country_id">Start Country</label>
+                <select id="start_country_id" name="start_country_id" class="form-control">
+                    <option value="">-- Any --</option>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="duration_min">Min Duration (days)</label>
+                <input type="number" id="duration_min" name="duration_min" class="form-control" placeholder="Min duration">
+            </div>
+            <div class="col-md-3">
+                <label for="duration_max">Max Duration (days)</label>
+                <input type="number" id="duration_max" name="duration_max" class="form-control" placeholder="Max duration">
+            </div>
+            <div class="col-md-3">
+                <label for="start_date">Start Date</label>
+                <input type="date" id="start_date" name="start_date" class="form-control">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label for="end_date">End Date</label>
+                <input type="date" id="end_date" name="end_date" class="form-control">
+            </div>
+            <div class="col-md-3 mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a href="/tours" class="btn btn-secondary">Reset Filters</a>
+            </div>
+        </div>
+    </form>
+     {% if AllTours|length > 0 %}
+        <div class="row">
+        {% for el in AllTours %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if el.image_path %}
+                <img src="{{ url_for('static', filename=el.image_path) }}" class="card-img-top" alt="{{ el.title }}">
+                {% else %}
+                <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="No Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ el.title }}</h5>
+                    <p class="card-text"><b>Type:</b> {{ el.type }}</p>
+                    <p class="card-text"><b>Price:</b> {{ el.price }} USD</p>
+                    <p class="card-text"><b>Duration:</b> {{ el.duration_days }} days</p>
+                    <p class="card-text"><b>Start Date:</b> {{ el.start_date.strftime('%Y-%m-%d') }}</p>
+                    <p class="card-text"><b>End Date:</b> {{ el.end_date.strftime('%Y-%m-%d') }}</p>
+                    <p class="card-text">{{ el.description|truncate(100, True) }}</p>
+                    <a href="/tours/{{ el.id }}" class="btn btn-warning">View more details</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Created on: {{ el.created_at.strftime('%Y-%m-%d %H:%M') }}
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    {% else  %}
+    <p>There are no tours yet</p>
+    {% endif  %}
+</div>
+{% endblock %}

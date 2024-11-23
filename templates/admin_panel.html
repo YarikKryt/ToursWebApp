@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Panel
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin-panel">
+                            <i class="bi bi-house-door"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/tours">
+                            <i class="bi bi-box"></i> Manage Tours
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/settings">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin-logout">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-4">
+            <h1 class="h2 mt-4">Welcome, Admin!</h1>
+            <p class="lead">You are now logged into the admin panel.</p>
+        </main>
+    </div>
+</div>
+
+<!-- Add Bootstrap Icons (if you don't have them already) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %}
