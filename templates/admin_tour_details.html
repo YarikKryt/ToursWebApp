@@ -36,6 +36,9 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('update_tour_route_points', id=tour.id) }}" class="btn btn-warning mt-3">Update Route Points</a>
+        <div class="d-flex justify-content-start gap-2">
+            <a href="/admin/tours" class="btn btn-outline-primary btn-md px-4">Go Back</a>
+            <a href="{{ url_for('update_tour_route_points', id=tour.id) }}" class="btn btn-warning btn-md px-4">Update Route Points</a>
+        </div>
 </div>
 {% endblock %}
