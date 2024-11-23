@@ -65,31 +65,34 @@ All tours on the website
         <div class="row">
         {% for el in AllTours %}
         <div class="col-md-4 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 d-flex flex-column">
                 {% if el.image_path %}
                 <img src="{{ url_for('static', filename=el.image_path) }}" class="card-img-top" alt="{{ el.title }}">
                 {% else %}
                 <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="No Image">
                 {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ el.title }}</h5>
-                    <p class="card-text"><b>Type:</b> {{ el.type }}</p>
-                    <p class="card-text"><b>Price:</b> {{ el.price }} USD</p>
-                    <p class="card-text"><b>Duration:</b> {{ el.duration_days }} days</p>
-                    <p class="card-text"><b>Start Date:</b> {{ el.start_date.strftime('%Y-%m-%d') }}</p>
-                    <p class="card-text"><b>End Date:</b> {{ el.end_date.strftime('%Y-%m-%d') }}</p>
-                    <p class="card-text">{{ el.description|truncate(100, True) }}</p>
-                    <a href="/tours/{{ el.id }}" class="btn btn-warning">View more details</a>
+                <div class="card-body d-flex flex-column">
+                    <div class="flex-grow-1">
+                        <h5 class="card-title">{{ el.title }}</h5>
+                        <p class="card-text"><b>Type:</b> {{ el.type }}</p>
+                        <p class="card-text"><b>Price:</b> {{ el.price }} USD</p>
+                        <p class="card-text"><b>Duration:</b> {{ el.duration_days }} days</p>
+                        <p class="card-text"><b>Start Date:</b> {{ el.start_date.strftime('%Y-%m-%d') }}</p>
+                        <p class="card-text"><b>End Date:</b> {{ el.end_date.strftime('%Y-%m-%d') }}</p>
+                        <p class="card-text">{{ el.description|truncate(100, True) }}</p>
+                    </div>
+                    <div class="mt-3">
+                        <a href="/tours/{{ el.id }}" class="btn btn-warning w-100">View more details</a>
+                    </div>
                 </div>
                 <div class="card-footer text-muted">
                     Created on: {{ el.created_at.strftime('%Y-%m-%d %H:%M') }}
                 </div>
-
             </div>
         </div>
         {% endfor %}
         </div>
-    {% else  %}
+    {% else %}
     <p>There are no tours yet</p>
     {% endif  %}
 </div>
