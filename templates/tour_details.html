@@ -105,11 +105,8 @@
 
             </table>
 
-            <!-- Кнопки для редагування, видалення та бронювання -->
             <div class="d-flex justify-content-start gap-2 mt-4">
-                <a href="/tours/{{ tour.id }}/update" class="btn btn-outline-primary btn-lg px-4">Update tour</a>
-                <a href="/tours/{{ tour.id }}/delete" class="btn btn-outline-danger btn-lg px-4" onclick="return confirm('Are you sure you want to delete this tour?');">Delete tour</a>
-                <a href="/tours/{{ tour.id }}/route-points/update" class="btn btn-outline-secondary btn-lg px-4">Update Route Points</a>
+                <a href="/tours" class="btn btn-outline-primary btn-lg px-4">Go Back</a>
                 <button type="button" class="btn btn-success btn-lg px-4" data-bs-toggle="modal" data-bs-target="#bookingModal">
                     Book This Tour
                 </button>
