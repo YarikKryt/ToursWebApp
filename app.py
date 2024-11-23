@@ -158,7 +158,8 @@ def tour_update(id):
         return render_template('tour_update.html', tour=tour, countries=countries)
 
 
-@app.route('/create-tour', methods=['GET', 'POST'])
+@app.route('/admin/tours/create-tour', methods=['GET', 'POST'])
+@admin_required
 def create_tour():
     if request.method == 'POST':
         # Отримуємо дані з форми
@@ -216,7 +217,7 @@ def create_tour():
         try:
             db.session.add(new_tour)
             db.session.commit()
-            return redirect(url_for('tours'))  # Перехід на головну сторінку або іншу
+            return redirect(url_for('admin_tours'))  # Перехід на головну сторінку або іншу
         except Exception as e:
             return render_template('error.html', error_message=str(e)), 500
 
