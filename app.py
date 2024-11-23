@@ -249,8 +249,7 @@ def delete_route_point(id, point_id):
         db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 400
 
-
-@app.route('/tours/<int:id>/route-points/update', methods=['GET', 'POST'])
+@app.route('/admin/tours/<int:id>/route-points/update', methods=['GET', 'POST'])
 def update_tour_route_points(id):
     tour = Tour.query.get_or_404(id)
     route_points = RoutePoint.query.filter_by(tour_id=id).order_by(RoutePoint.sequence_number).all()
@@ -374,7 +373,7 @@ def update_tour_route_points(id):
 
             db.session.commit()
             flash('Route points updated successfully!', 'success')
-            return redirect(url_for('tour_details', id=id))
+            return redirect(url_for('admin_tour_details', id=id))
 
         except Exception as e:
             db.session.rollback()
