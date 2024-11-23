@@ -22,8 +22,11 @@
             <tr>
                 <td>{{ tour.id }}</td>
                 <td>
-                    <img src="{{ url_for('static', filename=tour.image_path) }}" alt="{{ tour.title }}"
-                         class="img-thumbnail" style="width: 100px;">
+                    {% if tour.image_path %}
+                        <img src="{{ url_for('static', filename=tour.image_path) }}" alt="{{ tour.title }}" class="img-thumbnail" style="width: 100px;">
+                    {% else %}
+                        <img src="https://via.placeholder.com/350x200?text=No+Image" class="img-thumbnail" alt="No Image" style="width: 100px;">
+                    {% endif %}
                 </td>
                 <td>{{ tour.title }}</td>
                 <td>{{ tour.price }} $</td>

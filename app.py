@@ -10,6 +10,7 @@ from werkzeug.security import check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired
+from functools import wraps
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ToursWebApp.db'
@@ -21,6 +22,15 @@ db.init_app(app)  # Ініціалізація бази даних
 # Перевірка типу файлу
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'admin' not in session:  # Перевірка наявності 'admin' в сесії
+            flash("Access denied. Admins only.", "danger")
+            return redirect(url_for('admin_login'))  # Перенаправлення на сторінку логіну
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/')
 @app.route('/home')
@@ -429,6 +439,49 @@ def admin_panel():
 def logout():
     session.pop('admin', None)  # Видалення інформації з сесії при виході
     return redirect(url_for('admin_login'))  # Перенаправлення на сторінку входу
+
+@app.route('/admin/tours', methods=['GET'])
+@admin_required
+def admin_tours():
+    page = request.args.get('page', 1, type=int)  # Пагінація
+    tours = Tour.query.paginate(page=page, per_page=10)  # Показуємо по 10 турів на сторінку
+    return render_template('admin_tours.html', tours=tours)
+
+@app.route('/admin/tours/<int:id>', methods=['GET'])
+@admin_required
+def admin_tour_details(id):
+    tour = Tour.query.get_or_404(id)
+    route_points = RoutePoint.query.filter_by(tour_id=id).order_by(RoutePoint.sequence_number).all()
+    return render_template('admin_tour_details.html', tour=tour, route_points=route_points)
+
+@app.route('/admin/tours/<int:id>/delete', methods=['POST'])
+@admin_required
+def delete_tour(id):
+    tour = Tour.query.get_or_404(id)
+    try:
+        db.session.delete(tour)
+        db.session.commit()
+        flash("Tour deleted successfully.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error: {str(e)}", "danger")
+    return redirect(url_for('admin_tours'))
+
+@app.route('/admin/tours/<int:id>/update', methods=['GET', 'POST'])
+@admin_required
+def update_tour(id):
+    tour = Tour.query.get_or_404(id)
+    countries = Country.query.all()
+    if request.method == 'POST':
+        tour.title = request.form['title']
+        tour.description = request.form['description']
+        tour.price = request.form['price']
+        # Можна додати логіку оновлення зображень
+        db.session.commit()
+        flash("Tour updated successfully.", "success")
+        return redirect(url_for('admin_tour_details', id=id))
+    return render_template('tour_update.html', tour=tour, countries=countries)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
