@@ -7,7 +7,12 @@
     <h1>{{ tour.title }}</h1>
     <p><strong>Price:</strong> {{ tour.price }} $</p>
     <p><strong>Description:</strong> {{ tour.description }}</p>
+    {% if tour.image_path %}
     <img src="{{ url_for('static', filename=tour.image_path) }}" alt="{{ tour.title }}" class="img-fluid mb-4">
+    {% else %}
+        <img src="https://via.placeholder.com/350x200?text=No+Image" alt="No Image" class="img-fluid mb-4">
+    {% endif %}
+
 
     <h2>Route Points</h2>
     <table class="table table-bordered">
