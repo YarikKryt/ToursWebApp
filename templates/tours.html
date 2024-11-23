@@ -9,23 +9,31 @@ All tours on the website
     <h1 class="mb-4 text-center">Available tours</h1>
     <h2>Filter Tours</h2>
     <form method="get" action="/tours" class="mb-4">
-        <div class="row">
-            <div class="col-md-3">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" class="form-control" placeholder="Search by title">
-            </div>
-            <div class="col-md-3">
-                <label for="type">Type</label>
-                <input type="text" id="type" name="type" class="form-control" placeholder="Search by type">
-            </div>
-            <div class="col-md-3">
-                <label for="min_price">Min Price</label>
-                <input type="number" id="min_price" name="min_price" class="form-control" step="0.01" placeholder="Min price">
-            </div>
-            <div class="col-md-3">
-                <label for="max_price">Max Price</label>
-                <input type="number" id="max_price" name="max_price" class="form-control" step="0.01" placeholder="Max price">
-            </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" class="form-control"
+                   placeholder="Search by title"
+                   value="{{ request.args.get('title', '') }}">
+        </div>
+        <div class="col-md-3">
+            <label for="type">Type</label>
+            <input type="text" id="type" name="type" class="form-control"
+                   placeholder="Search by type"
+                   value="{{ request.args.get('type', '') }}">
+        </div>
+        <div class="col-md-3">
+            <label for="min_price">Min Price</label>
+            <input type="number" id="min_price" name="min_price" class="form-control"
+                   step="0.01" placeholder="Min price"
+                   value="{{ request.args.get('min_price', '') }}">
+        </div>
+        <div class="col-md-3">
+            <label for="max_price">Max Price</label>
+            <input type="number" id="max_price" name="max_price" class="form-control"
+                   step="0.01" placeholder="Max price"
+                   value="{{ request.args.get('max_price', '') }}">
+        </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
@@ -33,27 +41,36 @@ All tours on the website
                 <select id="start_country_id" name="start_country_id" class="form-control">
                     <option value="">-- Any --</option>
                     {% for country in countries %}
-                        <option value="{{ country.id }}">{{ country.name }}</option>
+                        <option value="{{ country.id }}"
+                                {% if request.args.get('start_country_id')|string == country.id|string %}selected{% endif %}>
+                            {{ country.name }}
+                        </option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="duration_min">Min Duration (days)</label>
-                <input type="number" id="duration_min" name="duration_min" class="form-control" placeholder="Min duration">
+                <input type="number" id="duration_min" name="duration_min" class="form-control"
+                       placeholder="Min duration"
+                       value="{{ request.args.get('duration_min', '') }}">
             </div>
             <div class="col-md-3">
                 <label for="duration_max">Max Duration (days)</label>
-                <input type="number" id="duration_max" name="duration_max" class="form-control" placeholder="Max duration">
+                <input type="number" id="duration_max" name="duration_max" class="form-control"
+                       placeholder="Max duration"
+                       value="{{ request.args.get('duration_max', '') }}">
             </div>
             <div class="col-md-3">
                 <label for="start_date">Start Date</label>
-                <input type="date" id="start_date" name="start_date" class="form-control">
+                <input type="date" id="start_date" name="start_date" class="form-control"
+                       value="{{ request.args.get('start_date', '') }}">
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
                 <label for="end_date">End Date</label>
-                <input type="date" id="end_date" name="end_date" class="form-control">
+                <input type="date" id="end_date" name="end_date" class="form-control"
+                       value="{{ request.args.get('end_date', '') }}">
             </div>
             <div class="col-md-3 mt-4 d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Apply Filters</button>
