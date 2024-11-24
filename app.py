@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, abort, jsonify
 import os
 from datetime import datetime
-from models import db, Tour, Country, RoutePoint, init_db
+from models import db, Tour, Country, RoutePoint, init_db, Admin
 import pycountry  # Бібліотека для отримання списку країн
 from pytz import timezone
 from werkzeug.utils import secure_filename
@@ -361,14 +361,17 @@ def admin_login():
         username = form.username.data
         password = form.password.data
 
-        # Логіка перевірки введених даних
-        if username == 'root' and password == 'root':
+        # Перевірка наявності адміністратора з таким логіном у базі даних
+        admin = Admin.query.filter_by(username=username).first()
+
+        if admin and admin.check_password(password):  # Використовуємо метод для перевірки пароля
             session['admin'] = True  # Зберігаємо, що користувач авторизований
             return redirect(url_for('admin_panel'))  # Перехід до адмін панелі
         else:
             error = 'Неправильний логін або пароль'
 
     return render_template('admin_login.html', form=form, error=error)
+
 
 @app.route('/admin-panel')
 def admin_panel():
