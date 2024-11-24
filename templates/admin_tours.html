@@ -4,8 +4,10 @@
 
 {% block body %}
 <div class="container mt-4">
-    <h1>Manage Tours</h1>
-    <a href="{{ url_for('create_tour') }}" class="btn btn-success mb-3">Add New Tour</a>
+    <div class="mb-3">
+        <a href="{{ url_for('create_tour') }}" class="btn btn-success">Add New Tour</a>
+        <a href="{{ url_for('admin_panel') }}" class="btn btn-primary">Go to Admin Panel</a>
+    </div>
 
     <table class="table table-bordered">
         <thead>
