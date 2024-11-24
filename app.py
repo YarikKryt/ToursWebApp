@@ -6,7 +6,6 @@ import pycountry  # Бібліотека для отримання списку 
 from pytz import timezone
 from werkzeug.utils import secure_filename
 import logging
-from werkzeug.security import check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired
@@ -17,7 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ToursWebApp.db'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 app.secret_key = '1003bc1c3e94a62aa965c2d780d659da'
 logging.basicConfig(level=logging.DEBUG)
-db.init_app(app)  # Ініціалізація бази даних
+db.init_app(app)
 
 # Перевірка типу файлу
 def allowed_file(filename):
@@ -26,8 +25,8 @@ def allowed_file(filename):
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'admin' not in session:  # Перевірка наявності 'admin' в сесії
-            return redirect(url_for('admin_login'))  # Перенаправлення на сторінку логіну
+        if 'admin' not in session:  # Перевірка чи адмін залогінений
+            return redirect(url_for('admin_login'))  # Якщо ні, перенаправлення на сторінку логіну
         return f(*args, **kwargs)
     return decorated_function
 
@@ -102,60 +101,6 @@ def tour_delete(id):
     except Exception as e:
         return render_template('error.html', error_message=str(e)), 500
 
-@app.route('/admin/tours/<int:id>/update', methods=['GET', 'POST'])
-def update_tour(id):
-    tour = Tour.query.get(id)
-    countries = Country.query.all()
-
-    if request.method == 'POST':
-        # Отримуємо дані з форми
-        tour.title = request.form['title']
-        tour.type = request.form['type']
-        tour.price = request.form['price']
-        tour.start_country_id = request.form['start_country_id']
-        tour.start_city = request.form['start_city']
-        tour.meeting_point = request.form.get('meeting_point', 'Поки невідомо')
-        tour.meeting_time = request.form.get('meeting_time', None)
-        if tour.meeting_time:
-            try:
-                tour.meeting_time = datetime.strptime(
-                    tour.meeting_time.split(':')[0] + ':' + tour.meeting_time.split(':')[1], '%H:%M').time()
-            except ValueError:
-                tour.meeting_time = None
-
-        tour.has_meals = 'has_meals' in request.form
-        tour.meals_per_day = request.form.get('meals_per_day')
-        tour.min_number_of_people = request.form['min_number_of_people']
-        tour.max_number_of_people = request.form['max_number_of_people']
-        tour.duration_days = request.form['duration_days']
-        tour.description = request.form.get('description', '')
-
-        # Перетворення дат з рядка на об'єкт date
-        tour.start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d').date()
-        tour.end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%d').date()
-
-        # Перевірка, чи вибрали нове зображення
-        if 'image' in request.files and request.files['image'].filename != '':
-            image = request.files['image']
-            if image and allowed_file(image.filename):
-                filename = secure_filename(image.filename)
-                image_path = os.path.join('img', 'tours', filename).replace('\\', '/')
-
-                # Зберігаємо нове зображення
-                image.save(os.path.join('static', image_path))  # Зберігаємо в папці static
-                tour.image_path = image_path  # Оновлюємо шлях до зображення
-        else:
-            # Якщо нове зображення не завантажено, залишаємо поточне зображення
-            pass
-
-        try:
-            db.session.commit()
-            return redirect(url_for('admin_tours'))  # Перехід на сторінку турів
-        except Exception as e:
-            return render_template('error.html', error_message=str(e)), 500
-    else:
-        return render_template('tour_update.html', tour=tour, countries=countries)
-
 
 @app.route('/admin/tours/create-tour', methods=['GET', 'POST'])
 @admin_required
@@ -216,7 +161,7 @@ def create_tour():
         try:
             db.session.add(new_tour)
             db.session.commit()
-            return redirect(url_for('admin_tours'))  # Перехід на головну сторінку або іншу
+            return redirect(url_for('admin_tours'))
         except Exception as e:
             return render_template('error.html', error_message=str(e)), 500
 
@@ -231,13 +176,11 @@ def delete_route_point(id, point_id):
         if point.tour_id != id:
             abort(404)
 
-        # Get all points after the deleted one
         subsequent_points = RoutePoint.query.filter(
             RoutePoint.tour_id == id,
             RoutePoint.sequence_number > point.sequence_number
         ).all()
 
-        # Update sequence numbers
         for subsequent_point in subsequent_points:
             subsequent_point.sequence_number -= 1
 
@@ -398,7 +341,7 @@ def add_countries():
             db.session.add(new_country)
     db.session.commit()
 
-# Створення таблиць (тільки для розробки)
+# Створення таблиць (якщо вони вже не створені)
 with app.app_context():
     db.create_all()
     init_db()
@@ -431,7 +374,7 @@ def admin_login():
 def admin_panel():
     if 'admin' not in session:  # Перевірка, чи є інформація в сесії
         return redirect(url_for('admin_login'))  # Перенаправлення на сторінку входу
-    return render_template('admin_panel.html')  # Ваша адмін панель
+    return render_template('admin_panel.html')
 
 
 @app.route('/admin-logout')
@@ -466,7 +409,7 @@ def delete_tour(id):
 
 @app.route('/admin/tours/<int:id>/update', methods=['GET', 'POST'])
 @admin_required
-def tour_update(id):
+def update_tour(id):
     tour = Tour.query.get_or_404(id)
     countries = Country.query.all()
 
@@ -521,4 +464,4 @@ def tour_update(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
