@@ -27,7 +27,6 @@ def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'admin' not in session:  # Перевірка наявності 'admin' в сесії
-            flash("Access denied. Admins only.", "danger")
             return redirect(url_for('admin_login'))  # Перенаправлення на сторінку логіну
         return f(*args, **kwargs)
     return decorated_function
@@ -103,8 +102,8 @@ def tour_delete(id):
     except Exception as e:
         return render_template('error.html', error_message=str(e)), 500
 
-@app.route('/tours/<int:id>/update', methods=['GET', 'POST'])
-def tour_update(id):
+@app.route('/admin/tours/<int:id>/update', methods=['GET', 'POST'])
+def update_tour(id):
     tour = Tour.query.get(id)
     countries = Country.query.all()
 
@@ -151,7 +150,7 @@ def tour_update(id):
 
         try:
             db.session.commit()
-            return redirect(url_for('tours'))  # Перехід на сторінку турів
+            return redirect(url_for('admin_tours'))  # Перехід на сторінку турів
         except Exception as e:
             return render_template('error.html', error_message=str(e)), 500
     else:
@@ -461,26 +460,64 @@ def delete_tour(id):
     try:
         db.session.delete(tour)
         db.session.commit()
-        flash("Tour deleted successfully.", "success")
     except Exception as e:
         db.session.rollback()
-        flash(f"Error: {str(e)}", "danger")
     return redirect(url_for('admin_tours'))
 
 @app.route('/admin/tours/<int:id>/update', methods=['GET', 'POST'])
 @admin_required
-def update_tour(id):
+def tour_update(id):
     tour = Tour.query.get_or_404(id)
     countries = Country.query.all()
+
     if request.method == 'POST':
+        # Отримуємо дані з форми
         tour.title = request.form['title']
-        tour.description = request.form['description']
+        tour.type = request.form['type']
         tour.price = request.form['price']
-        # Можна додати логіку оновлення зображень
-        db.session.commit()
-        flash("Tour updated successfully.", "success")
-        return redirect(url_for('admin_tour_details', id=id))
-    return render_template('tour_update.html', tour=tour, countries=countries)
+        tour.start_country_id = request.form['start_country_id']
+        tour.start_city = request.form['start_city']
+        tour.meeting_point = request.form.get('meeting_point', 'Поки невідомо')
+        tour.meeting_time = request.form.get('meeting_time', None)
+        if tour.meeting_time:
+            try:
+                tour.meeting_time = datetime.strptime(
+                    tour.meeting_time.split(':')[0] + ':' + tour.meeting_time.split(':')[1], '%H:%M').time()
+            except ValueError:
+                tour.meeting_time = None
+
+        tour.has_meals = 'has_meals' in request.form
+        tour.meals_per_day = request.form.get('meals_per_day')
+        tour.min_number_of_people = request.form['min_number_of_people']
+        tour.max_number_of_people = request.form['max_number_of_people']
+        tour.duration_days = request.form['duration_days']
+        tour.description = request.form.get('description', '')
+
+        # Перетворення дат з рядка на об'єкт date
+        tour.start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d').date()
+        tour.end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%d').date()
+
+        # Перевірка, чи вибрали нове зображення
+        if 'image' in request.files and request.files['image'].filename != '':
+            image = request.files['image']
+            if image and allowed_file(image.filename):
+                filename = secure_filename(image.filename)
+                image_path = os.path.join('img', 'tours', filename).replace('\\', '/')
+
+                # Зберігаємо нове зображення
+                image.save(os.path.join('static', image_path))  # Зберігаємо в папці static
+                tour.image_path = image_path  # Оновлюємо шлях до зображення
+        else:
+            # Якщо нове зображення не завантажено, залишаємо поточне зображення
+            pass
+
+        try:
+            db.session.commit()
+            return redirect(url_for('admin_tours'))
+        except Exception as e:
+            return render_template('error.html', error_message=str(e)), 500
+    else:
+        return render_template('tour_update.html', tour=tour, countries=countries)
 
 
 if __name__ == '__main__':
