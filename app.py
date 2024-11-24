@@ -373,7 +373,7 @@ def update_tour_route_points(id):
 
             db.session.commit()
             flash('Route points updated successfully!', 'success')
-            return redirect(url_for('admin_tour_details', id=id))
+            return redirect(url_for('update_tour_route_points', id=id))
 
         except Exception as e:
             db.session.rollback()
