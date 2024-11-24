@@ -52,20 +52,20 @@ Update Route Points for {{ tour.title }}
                         <td>{{ point.sequence_number }}</td>
                         <td>
                             <input type="text"
-                                   name="route_point_{{ point.sequence_number }}"
+                                   name="route_point_{{ point.id }}"
                                    class="form-control"
                                    value="{{ point.location }}"
                                    required>
                         </td>
                         <td>
                             <input type="text"
-                                   name="type_{{ point.sequence_number }}"
+                                   name="type_{{ point.id }}"
                                    class="form-control"
                                    value="{{ point.location_type }}"
                                    required>
                         </td>
                         <td>
-                            <select name="country_{{ point.sequence_number }}"
+                            <select name="country_{{ point.id }}"
                                     class="form-select"
                                     required>
                                 {% for country in countries %}
@@ -78,26 +78,26 @@ Update Route Points for {{ tour.title }}
                         </td>
                         <td>
                             <input type="checkbox"
-                                   name="is_final_{{ point.sequence_number }}"
+                                   name="is_final_{{ point.id }}"
                                    class="final-checkbox form-check-input"
                                    {% if point.is_final %}checked{% endif %}
                                    {% if not loop.last %}disabled{% endif %}>
                         </td>
                         <td>
                             <input type="text"
-                                   name="transport_{{ point.sequence_number }}"
+                                   name="transport_{{ point.id }}"
                                    class="form-control"
                                    value="{{ point.transport_to_next or '' }}">
                         </td>
                         <td>
                             <input type="number"
-                                   name="duration_{{ point.sequence_number }}"
+                                   name="duration_{{ point.id }}"
                                    class="form-control"
                                    value="{{ point.stay_duration_hours or '' }}"
                                    min="0">
                         </td>
                         <td>
-                            <textarea name="description_{{ point.sequence_number }}"
+                            <textarea name="description_{{ point.id }}"
                                       class="form-control"
                                       rows="2">{{ point.description or '' }}</textarea>
                         </td>
