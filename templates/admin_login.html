@@ -12,22 +12,18 @@ Admin Login
         </div>
         <div class="card-body p-5">
             <form method="POST" action="/admin-login">
-                <!-- CSRF token -->
                 {{ form.hidden_tag() }}
 
-                <!-- Username input -->
                 <div class="mb-4">
                     <label for="username" class="form-label fw-bold">Username</label>
                     {{ form.username(class="form-control form-control-lg", id="username", placeholder="Enter your username") }}
                 </div>
 
-                <!-- Password input -->
                 <div class="mb-4">
                     <label for="password" class="form-label fw-bold">Password</label>
                     {{ form.password(class="form-control form-control-lg", id="password", placeholder="Enter your password") }}
                 </div>
 
-                <!-- Error message -->
                 {% if error %}
                 <div class="alert alert-danger mt-3" role="alert">
                     <i class="fas fa-exclamation-circle me-2"></i>
@@ -35,7 +31,6 @@ Admin Login
                 </div>
                 {% endif %}
 
-                <!-- Submit button -->
                 <div class="d-grid gap-2 mt-4">
                     <button type="submit" class="btn btn-primary btn-lg">Login</button>
                 </div>

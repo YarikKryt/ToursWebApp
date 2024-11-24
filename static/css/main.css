@@ -1,7 +1,7 @@
 .card-img-top {
     width: 100%;
-    height: 300px; /* Фіксована висота */
-    object-fit: cover; /* Обрізає зображення так, щоб воно заповнювало контейнер */
+    height: 300px;
+    object-fit: cover;
 }
 
 .is-invalid {
@@ -15,28 +15,27 @@
 
 /* Admin login panel */
 .card {
-    max-width: 400px;  /* Максимальна ширина картки */
-    width: 100%;  /* Залишаємо ширину картки 100% від контейнера */
+    max-width: 400px;
+    width: 100%;
 }
 
 .card-header h4 {
-    font-size: 1.5rem;  /* Зменшуємо розмір шрифту заголовку */
+    font-size: 1.5rem;
 }
 
 .form-control {
-    font-size: 1rem;  /* Трохи збільшуємо шрифт у полях вводу */
+    font-size: 1rem;
 }
 
-/* Виправлення відступів */
 .card-body {
-    padding: 2rem;  /* Більші відступи для більш зручного вигляду */
+    padding: 2rem;
 }
 
 .btn-primary {
-    padding: 10px;  /* Додаємо трохи відступів до кнопки */
-    font-size: 1.1rem;  /* Трошки більший шрифт на кнопці */
+    padding: 10px;
+    font-size: 1.1rem;
 }
 
 .alert {
-    margin-top: 1rem;  /* Додаємо відступ для повідомлень про помилку */
+    margin-top: 1rem;
 }
