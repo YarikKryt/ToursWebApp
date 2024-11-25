@@ -7,6 +7,9 @@ Add New Tour
 {% block body %}
     <div class="container">
         <h1>Add New Tour</h1>
+        <div class="d-flex justify-content-start gap-2 mt-4">
+                <a href="/admin/tours" class="btn btn-outline-primary btn-md px-4">Go Back</a>
+            </div>
         <form action="/admin/tours/create-tour" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Title</label>
